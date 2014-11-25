@@ -1,0 +1,15 @@
+{
+    "name": "limiting-queue"
+    , "version": "0.1.1-beta"
+    , "description": "A queue which will callback to a user defined function on each item of the queue, limiting parallel tasks using promises and deferreds."
+    , "keywords": [
+        "queue"
+        , "callback"
+        , "parallel"
+        , "limit"
+    ]
+    , "main": "limiting-queue"
+    , "dependencies": {
+        "q": "1.0.1"
+    }
+}
