@@ -1,9 +1,6 @@
- A Limitedly parallel queue for NodeJS
- =====================================
+# A Limitedly parallel queue for NodeJS
 
-
- Usage
- ------
+## Usage
 
     var LimitingQueue = require('limiting-queue');
 
@@ -64,9 +61,8 @@
     });
  
 
- Contributing
- ------------
+## Contributing
 
- Please maintain the existing style - but do open a pull request if you have a bugfix or a cool feature.
- Be sure to document your change.  Pull requests are preferred to bug reports (though if you submit a bug
- report, you're welcome to fix your own bug).
+Please maintain the existing style - but do open a pull request if you have a bugfix or a cool feature.
+Be sure to document your change.  Pull requests are preferred to bug reports (though if you submit a bug
+report, you're welcome to fix your own bug).
