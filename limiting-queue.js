@@ -57,7 +57,7 @@ module.exports = function LimitingQueue(opts) {
         ;
     function consume(){
         var startWorkers = workers;
-        for (; opts.maxWorkers == -1 || workers < opts.maxWorkers;) {
+        for (; opts.maxWorkers < 0 || workers < opts.maxWorkers;) {
             if (!(function() {
                 var toWork = queueHead;
                 if (!toWork) {
@@ -81,7 +81,7 @@ module.exports = function LimitingQueue(opts) {
                     /**
                      *  If there's a maximum execution time, set a callback.
                      */
-                    if (opts.maxWait != -1) {
+                    if (opts.maxWait < 0) {
                         waitItOut = setTimeout(function() {
                             if (typeof timeoutCallback == 'function') {
                                 timeoutCallback();
@@ -100,7 +100,7 @@ module.exports = function LimitingQueue(opts) {
                     workers--;
                     try {
                         toWork.errors.push(error);
-                        if (toWork.retries < opts.maxRetries) {
+                        if (opts.maxRetries < 0 || toWork.retries < opts.maxRetries) {
                             toWork.retries++;
                             pushToQueue(toWork);
                         } else {
