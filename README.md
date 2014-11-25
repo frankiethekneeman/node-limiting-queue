@@ -6,22 +6,22 @@
 
     var queue = new LimitingQueue({
         /**
-         *  The maximum numbers of simultaneous workers.  An integer greater than zero.  Any negative number will
-         *  be interpreted as "no limit."
+         *  The maximum numbers of simultaneous workers.  An integer greater than 
+         *  zero.  Any negative number will be interpreted as "no limit."
          *  
          *  Defaults to -1.
          */
         maxWorkers: -1
         /**
-         *  The maximum number of retries for a queue entry.  An integer greater than zero.  Any negative number will be 
-         *  interpreted as "no limit."
+         *  The maximum number of retries for a queue entry.  An integer greater than 
+         *  zero.  Any negative number will be interpreted as "no limit."
          *  
          *  Defaults to -1.
          */
         , maxRetries: -1
         /**
-         *  The number of milliseconds to wait before declaring a job failed by timeout.  
-         *  An integer greater than zero.  Any negative number will be 
+         *  The number of milliseconds to wait before declaring a job failed by 
+         *  timeout.  An integer greater than zero.  Any negative number will be 
          *  interpreted as "no limit."
          *  
          *  Defaults to -1.
@@ -32,11 +32,15 @@
          *  
          *  Defaults to an empty function.
          *  
-         *  @param payload The information previously passed into the "push" function.
-         *  @param previousAttempts the number of times this payload has previously been pushed to this function.
-         *  @param deferred The deferred object to declare success or failure on the queue item.
+         *  @param payload The information previously passed into the "push" 
+         *      function.
+         *  @param previousAttempts the number of times this payload has previously 
+         *      been pushed to this function.
+         *  @param deferred The deferred object to declare success or failure on the 
+         *      queue item.
          *  
-         *  @return (Optional) a function to be called in case of a timeout (to do any necessary cleanup).
+         *  @return (Optional) a function to be called in case of a timeout (to do 
+         *      any necessary cleanup).
          */
         , callback: function(payload, previousAttempts, deferred){}
         /**
@@ -44,8 +48,10 @@
          *  
          *  Defaults to an empty function.
          *  
-         *  @param payload The information previously passed into the "push" function.
-         *  @param totalAttempts the total number of attempts made to process this information.
+         *  @param payload The information previously passed into the "push" 
+         *      function.
+         *  @param totalAttempts the total number of attempts made to process this 
+         *      information.
          *  @param errors The list of errors that caused this to error out.
          */
         , failure: function(payload, totalAttempts, errors){}
