@@ -97,18 +97,21 @@ module.exports = function LimitingQueue(opts) {
                     consume();
                     clearTimeout(waitItOut);
                 }, function(error) {
-                    toWork.errors.push(error);
-                    failures++;
-                    if (toWork.retries <= opts.maxRetries) {
-                        toWork.retries++;
-                        this.push(toWork);
-                    } else {
-                        opts.failure(toWork.payload, toWork.retries, toWork.errors);
-                    }
                     workers--;
-                    consume();
-                    if (waitItOut !== false) {
-                        clearTimeout(waitItOut);
+                    try {
+                        toWork.errors.push(error);
+                        if (toWork.retries < opts.maxRetries) {
+                            toWork.retries++;
+                            pushToQueue(toWork);
+                        } else {
+                            opts.failure(toWork.payload, toWork.retries + 1, toWork.errors);
+                        }
+                        consume();
+                        if (waitItOut !== false) {
+                            clearTimeout(waitItOut);
+                        }
+                    } catch (e) {
+                        console.log(e.stack);
                     }
                 });
                 //Prep the timeout for time limiting.
@@ -117,9 +120,20 @@ module.exports = function LimitingQueue(opts) {
                 break;
             }
         }
-        if (startWorkers != workers) {
-            opt.progress(queueSize, workers);
+        opts.progress(queueSize, workers);
+        if (workers == 0 && queueSize > 0) {
+            consume();
         }
+    }
+    function pushToQueue(newWork) {
+        //If there is a tail.
+        if (queueTail) {
+            queueTail = queueTail.next = newWork;
+        } else {
+            //If there's no tail, there's no head.
+            queueTail = queueHead = newWork;
+        }
+        queueSize++;
     }
     this.push = function(payload) {
         var newWork = {
@@ -129,14 +143,7 @@ module.exports = function LimitingQueue(opts) {
             , errors: []
         }
 
-        //If there is a tail.
-        if (queueTail) {
-            queueTail = queueTail.next = newWork;
-        } else {
-            //If there's no tail, there's no head.
-            queueTail = queueHead = newWork;
-        }
-        queueSize++;
+        pushToQueue(newWork);
         //Make sure to call consume in case there are no workers running.
         consume();
     }

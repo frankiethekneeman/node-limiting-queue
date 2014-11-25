@@ -9,7 +9,15 @@
         , "limit"
     ]
     , "main": "limiting-queue"
+    , "homepage" : "https://github.com/frankiethekneeman/node-limiting-queue"
+    , "bugs": {
+        "url": "https://github.com/frankiethekneeman/node-limiting-queue/issues"
+    }
     , "dependencies": {
         "q": "1.0.1"
+    }
+    , "author": {
+        "name": "Francis J.. Van Wetering IV"
+        , "email": "fjvanw@thetadelt.com"
     }
 }
