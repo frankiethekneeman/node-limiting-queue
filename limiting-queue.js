@@ -144,6 +144,8 @@ module.exports = function LimitingQueue(opts) {
                      */
                     workers--;
                     try {
+                        //Null this bitch out to avoid any infinite loops in the queue.
+                        toWork.next = null;
                         toWork.errors.push(error);
                         if (this.opts.maxRetries < 0 || toWork.retries < this.opts.maxRetries) {
                             toWork.retries++;
