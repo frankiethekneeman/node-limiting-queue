@@ -96,11 +96,11 @@ The number of jobs in the queue. (Not being worked on.)
 
 The number of workers currently working.
 
-##### autoStart
+#### autoStart
 
 Pass true to start the queue immediately, false to let it wait.
     
-##### retryImmediately
+#### retryImmediately
     
 Pass true to push failed jobs to the head of the queue, false to push them to the back.
 
