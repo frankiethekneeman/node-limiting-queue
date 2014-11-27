@@ -63,7 +63,7 @@ The number of times this payload has previously been pushed to this function.
 The deferred object to declare success or failure on the queue item.  Call `deferred.fulfill()` to
 declare success, and `deferred.reject(error)` to declare a failure.
 
-### failure.
+### failure
 
 The function to call when a queue entry flunks out of the queue entirely.  
 Defaults to an empty function.
@@ -103,6 +103,8 @@ Pass true to start the queue immediately, false to let it wait.
 ##### retryImmediately
     
 Pass true to push failed jobs to the head of the queue, false to push them to the back.
+
+## Methods
 
 ### queue.push(payload)
 
