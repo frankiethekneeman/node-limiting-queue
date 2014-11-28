@@ -1,6 +1,6 @@
 {
     "name": "limiting-queue"
-    , "version": "0.2.2-beta"
+    , "version": "1.0.0"
     , "description": "A queue which will callback to a user defined function on each item of the queue, limiting parallel tasks using promises and deferreds."
     , "keywords": [
         "queue"
@@ -9,6 +9,10 @@
         , "limit"
     ]
     , "main": "limiting-queue"
+    , "repository": {
+        "type": "git"
+        , "url": "https://github.com/frankiethekneeman/node-limiting-queue"
+    }
     , "homepage" : "https://github.com/frankiethekneeman/node-limiting-queue"
     , "bugs": {
         "url": "https://github.com/frankiethekneeman/node-limiting-queue/issues"
