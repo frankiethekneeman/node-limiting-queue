@@ -10,6 +10,7 @@ var WORKERS = 5
     , WAIT = 50
     , LARGE_WAIT = 1000
     , SIZE = 10
+    , WAIT_FUDGE_FACTOR = 2
     ;
 
 describe('Limiting Queue', function() {
@@ -133,7 +134,7 @@ describe('Limiting Queue', function() {
                 var start = new Date().getTime();
                 return function() {
                     var end = new Date().getTime();
-                    expect(end - start).to.be.at.least(WAIT);
+                    expect(end - start).to.be.at.least(WAIT - WAIT_FUDGE_FACTOR);
                 };
             };
             this.queue.opts.failure = sinon.spy();
@@ -146,7 +147,7 @@ describe('Limiting Queue', function() {
             this.queue.append(payload);
         });
         this.timeout ((RETRIES + 2) * LARGE_WAIT);
-        it.skip('Should respect a large timeout value', function(done) {
+        it('Should respect a large timeout value', function(done) {
             var payload = {}
                 , _this = this
                 ;
@@ -156,7 +157,7 @@ describe('Limiting Queue', function() {
                 var start = new Date().getTime();
                 return function() {
                     var end = new Date().getTime();
-                    expect(end - start).to.be.at.least(LARGE_WAIT);
+                    expect(end - start).to.be.at.least(LARGE_WAIT - WAIT_FUDGE_FACTOR);
                 };
             };
             this.queue.opts.failure = sinon.spy();
