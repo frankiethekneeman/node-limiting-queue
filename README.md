@@ -1,3 +1,9 @@
+[![BuildStatus](https://travis-ci.org/frankiethekneeman/node-limiting-queue.svg?branch=master)][https://travis-ci.org/frankiethekneeman/node-limiting-queue]
+
+[![Code Climate](https://codeclimate.com/github/frankiethekneeman/node-limiting-queue/badges/gpa.svg)](https://codeclimate.com/github/frankiethekneeman/node-limiting-queue)
+
+[![Test Coverage](https://codeclimate.com/github/frankiethekneeman/node-limiting-queue/badges/coverage.svg)](https://codeclimate.com/github/frankiethekneeman/node-limiting-queue)
+
 # A Limitedly parallel queue for NodeJS
 
 ## Usage
