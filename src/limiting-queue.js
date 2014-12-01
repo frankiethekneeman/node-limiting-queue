@@ -58,7 +58,7 @@ module.exports = function LimitingQueue(opts) {
                 } catch (err) {//Try
                     deferred.reject(err);
                 }//Catch Err
-                deferred.promise.then(function(result) {
+                deferred.promise.then(function() {
 
                     /**
                      *  ON success, note worker completion, clear any existing timeout,
@@ -78,6 +78,9 @@ module.exports = function LimitingQueue(opts) {
                      */
                     workers--;
                     try {
+                        if (waitItOut !== false) {
+                            clearTimeout(waitItOut);
+                        }//If there's a timeout.
                         //Null this bitch out to avoid any infinite loops in the queue.
                         toWork.next = null;
                         toWork.errors.push(error);
@@ -91,13 +94,10 @@ module.exports = function LimitingQueue(opts) {
                         } else {//If should retry
                             this.opts.failure(toWork.payload, toWork.retries + 1, toWork.errors);
                         }//If total failure
-                        if (waitItOut !== false) {
-                            clearTimeout(waitItOut);
-                        }//If there's a timeout.
-                        consume();
                     } catch (e) {//Try
-                        console.log(e.stack);
+                        //There's just nothing to be done here.
                     } //Catch Error
+                    consume();
                 }.bind(this));
                 return true;
             }.bind(this))()) {

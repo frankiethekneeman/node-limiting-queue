@@ -32,7 +32,9 @@ describe('Defaults', function() {
             expect(this.queue.opts[key]).to.not.eql(defaults[key]);
             expect(this.queue.opts[key]).to.eql(toSet[key]);
         });
-        it(key + ' Should revert to the default value when deleted (' + defaults[key] + ')', function() {
+        it(key + ' Should maintain a value through several deletes', function() {
+            delete this.queue.opts[key];
+            delete this.queue.opts[key];
             delete this.queue.opts[key];
             expect(this.queue.opts[key]).to.eql(defaults[key]);
         });
