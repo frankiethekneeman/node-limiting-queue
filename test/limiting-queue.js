@@ -216,7 +216,7 @@ describe('Limiting Queue', function() {
             this.queue.append(payload);
         });
         this.timeout ((RETRIES + 2) * LARGE_WAIT);
-        it.skip('Should respect a large timeout value', function(done) {
+        it('Should respect a large timeout value', function(done) {
             var payload = {}
                 , _this = this
                 ;
