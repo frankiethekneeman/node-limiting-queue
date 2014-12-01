@@ -1,4 +1,4 @@
-[![BuildStatus](https://travis-ci.org/frankiethekneeman/node-limiting-queue.svg?branch=master)][https://travis-ci.org/frankiethekneeman/node-limiting-queue]
+[![BuildStatus](https://travis-ci.org/frankiethekneeman/node-limiting-queue.svg?branch=master)](https://travis-ci.org/frankiethekneeman/node-limiting-queue)
 
 [![Code Climate](https://codeclimate.com/github/frankiethekneeman/node-limiting-queue/badges/gpa.svg)](https://codeclimate.com/github/frankiethekneeman/node-limiting-queue)
 
