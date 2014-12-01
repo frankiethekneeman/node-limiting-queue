@@ -49,7 +49,7 @@ module.exports = function LimitingQueue(opts) {
                      */
                     if (this.opts.maxWait >= 0) {
                         waitItOut = setTimeout(function() {
-                            if (typeof timeoutCallback == 'function') {
+                            if (typeof timeoutCallback === 'function') {
                                 timeoutCallback();
                             }//if Callback
                             deferred.reject(new Error('Maximum Time'));
@@ -65,8 +65,9 @@ module.exports = function LimitingQueue(opts) {
                      *  and cycle back around on the queue.
                      */
                     workers--;
-                    if (waitItOut !== false)
+                    if (waitItOut !== false) {
                         clearTimeout(waitItOut);
+                    }
                     consume();
                 }.bind(this), function(error) {
 
@@ -108,10 +109,10 @@ module.exports = function LimitingQueue(opts) {
 
         //If there are no workers, but still items in the queue (and we're supposed to be working)
         //Recurse back.
-        if (working && workers == 0 && queueSize > 0) {
+        if (working && workers === 0 && queueSize > 0) {
             consume();
         }//If should retry
-    }.bind(this)//consume()
+    }.bind(this);//consume()
 
     /**
      *  Push to the front of the queue.  Private function.
@@ -128,7 +129,7 @@ module.exports = function LimitingQueue(opts) {
             queueTail = queueHead = newWork;
         }//else, no head
         queueSize++;
-    }.bind(this)//privatePush(newWork)
+    }.bind(this);//privatePush(newWork)
 
     /**
      *  Append to the back of the queue.  Private function.
@@ -144,7 +145,7 @@ module.exports = function LimitingQueue(opts) {
             queueTail = queueHead = newWork;
         }//If there's no tail
         queueSize++;
-    }.bind(this)//privatePush(newWork)
+    }.bind(this);//privatePush(newWork)
 
     /**
      *  Generalized private function to abstract queue node generation
@@ -172,7 +173,7 @@ module.exports = function LimitingQueue(opts) {
         //Make sure to call consume in case there are no workers running.
         consume();
         return toReturn;
-    }.bind(this)//addPayload(payload, addAction)
+    }.bind(this);//addPayload(payload, addAction)
 
     /**
      *  Push to the front of the queue.
@@ -183,7 +184,7 @@ module.exports = function LimitingQueue(opts) {
      */
     this.push = function(payload) {
         return addPayload(payload, privatePush);
-    }.bind(this)//push(payload)
+    }.bind(this);//push(payload)
 
     /**
      *  Append to the back of the queue.
@@ -194,7 +195,7 @@ module.exports = function LimitingQueue(opts) {
      */
     this.append = function(payload) {
         return addPayload(payload, privateAppend);
-    }.bind(this)//append(payload)
+    }.bind(this);//append(payload)
 
     /**
      *  Check the size of the queue.
@@ -203,7 +204,7 @@ module.exports = function LimitingQueue(opts) {
      */
     this.size = function() {
         return queueSize;
-    }.bind(this)//size()
+    }.bind(this);//size()
 
     /**
      *  Check how many workers are currently doing work.
@@ -212,7 +213,7 @@ module.exports = function LimitingQueue(opts) {
      */
     this.workers = function() {
         return workers;
-    }.bind(this)//workers()
+    }.bind(this);//workers()
 
     /**
      *  Start the queue.
@@ -220,12 +221,12 @@ module.exports = function LimitingQueue(opts) {
     this.start = function() {
         working = true;
         consume();
-    }.bind(this)//start()
+    }.bind(this);//start()
 
     /**
      *  Stop the queue.  This does not cancel working workers - it just ceases the creation of new workers.
      */
     this.stop = function() {
         working = false;
-    }.bind(this)//stop()
+    }.bind(this);//stop()
 }
