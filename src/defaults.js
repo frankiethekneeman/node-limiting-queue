@@ -38,7 +38,7 @@ module.exports = {
      *  
      *  @return (Optional) a function to be called in case of a timeout (to do any necessary cleanup).
      */
-    , callback: function(payload, previousAttempts, deferred){deferred.fulfill()}
+    , callback: function(payload, previousAttempts, deferred){deferred.fulfill();}
 
     /**
      *  The function to call when a queue entry flunks out of the queue entirely.
@@ -47,7 +47,7 @@ module.exports = {
      *  @param totalAttempts the total number of attempts made to process this information.
      *  @param errors The list of errors that caused this to error out.
      */
-    , failure: function(payload, totalAttempts, errors){}
+    , failure: function(){}
 
     /**
      *  A progress callback to be called every time a new worker starts.
@@ -55,7 +55,7 @@ module.exports = {
      *  @param queueSize - The number of jobs in the queue.
      *  @param workers - The number of workers currently working.
      */
-    , progress: function(queueSize, workers){}
+    , progress: function(){}
 
     /**
      *  Pass true to start the queue immediately, false to let it wait.
@@ -66,4 +66,4 @@ module.exports = {
      *  Pass true to push failed jobs to the head of the queue, false to push them to the back.
      */
     , retryImmediately: false
-}
+};

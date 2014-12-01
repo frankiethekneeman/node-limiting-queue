@@ -1,8 +1,8 @@
 var chai = require('chai')
     , sinon = require('sinon')
     , expect = chai.expect
-    , defaults = require('../src/defaults')
-    , LimitingQueue = require('../src/limiting-queue')
+    , defaults = require('../src-cov/defaults')
+    , LimitingQueue = require('../src-cov/limiting-queue')
     ;
 chai.use(require('sinon-chai'));
 
@@ -32,7 +32,9 @@ describe('Defaults', function() {
             expect(this.queue.opts[key]).to.not.eql(defaults[key]);
             expect(this.queue.opts[key]).to.eql(toSet[key]);
         });
-        it(key + ' Should revert to the default value when deleted (' + defaults[key] + ')', function() {
+        it(key + ' Should maintain a value through several deletes', function() {
+            delete this.queue.opts[key];
+            delete this.queue.opts[key];
             delete this.queue.opts[key];
             expect(this.queue.opts[key]).to.eql(defaults[key]);
         });

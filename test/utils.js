@@ -1,7 +1,7 @@
 var chai = require('chai')
     , sinon = require('sinon')
     , expect = chai.expect
-    , utils = require('../src/utils')
+    , utils = require('../src-cov/utils')
     ;
 chai.use(require('sinon-chai'));
 
