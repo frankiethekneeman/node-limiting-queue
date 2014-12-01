@@ -8,7 +8,7 @@
         , "parallel"
         , "limit"
     ]
-    , "main": "limiting-queue"
+    , "main": "src/limiting-queue"
     , "repository": {
         "type": "git"
         , "url": "https://github.com/frankiethekneeman/node-limiting-queue"
@@ -19,6 +19,10 @@
     }
     , "dependencies": {
         "q": "1.0.1"
+        , "mocha": "*"
+        , "chai": "*"
+        , "sinon-chai": "*"
+        , "sinon": "*"
     }
     , "author": {
         "name": "Francis J.. Van Wetering IV"
