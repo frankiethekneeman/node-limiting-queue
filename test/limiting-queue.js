@@ -1,7 +1,7 @@
 var chai = require('chai')
     , sinon = require('sinon')
     , expect = chai.expect
-    , LimitingQueue = require('../src/limiting-queue')
+    , LimitingQueue = require('../src-cov/limiting-queue')
     ;
 chai.use(require('sinon-chai'));
 

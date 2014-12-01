@@ -1,8 +1,8 @@
 var chai = require('chai')
     , sinon = require('sinon')
     , expect = chai.expect
-    , defaults = require('../src/defaults')
-    , LimitingQueue = require('../src/limiting-queue')
+    , defaults = require('../src-cov/defaults')
+    , LimitingQueue = require('../src-cov/limiting-queue')
     ;
 chai.use(require('sinon-chai'));
 

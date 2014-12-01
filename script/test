@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# bootstrap environment
+source script/bootstrap
+
+#Get rid of old coverage stuff
+rm -rf *-cov/
+#Generate Coverage
+jscover src src-cov
+sed -i 's@\(../\(src\)\)\(/\w\+\)@\1-cov\3@' src-cov/*.js
+
+mocha 
+
+mocha -R mocha-lcov-reporter > coverage.lcov
+
+sed -i 's@SF:\([a-zA-Z0-9_-]\+\.js\)@SF:src/\1@g' coverage.lcov
+
+if [ "x$CODECLIMATE_REPO_TOKEN" != "x" ]
+then
+   CODECLIMATE_REPO_TOKEN=094212d256c7224bdd97c0cd8e3f8de232d2512cf0184670abef7e475ca10d93 codeclimate < coverage.lcov
+fi
