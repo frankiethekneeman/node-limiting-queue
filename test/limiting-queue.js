@@ -313,5 +313,31 @@ describe('Limiting Queue', function() {
                 this.queue.start();
             });
         });
+        describe('forEach', function() {
+            it('Should iterate over all items, in order, without removing them.', function() {
+                this.queue.stop();
+                for (var i = 0; i < SIZE; i++) {
+                    expect(this.queue.push(i)).to.be.true;
+                }
+                expect(this.queue.size()).to.equal(SIZE);
+                var j = 0;
+                this.queue.forEach(function(item) {
+                    expect(item).to.equal(j);
+                    j++;
+                });
+                expect(this.queue.size()).to.equal(SIZE);
+            });
+            it('Should not be perturbed by errors.', function() {
+                this.queue.stop();
+                for (var i = 0; i < SIZE; i++) {
+                    expect(this.queue.push(i)).to.be.true;
+                }
+                expect(function() {
+                    this.queue.forEach(function(item) {
+                        throw new Error("Testing");
+                    });
+                }.bind(this)).to.not.throw();
+            });
+        });
     });
 });
