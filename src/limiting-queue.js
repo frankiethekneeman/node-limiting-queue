@@ -229,4 +229,22 @@ module.exports = function LimitingQueue(opts) {
     this.stop = function() {
         working = false;
     }.bind(this);//stop()
+
+    /**
+     *  Execute a function on each member currently in the queue without removing it from the queue.
+     *  This function is sequential in nature.
+     *  
+     *  @param callback The funciton to be called on each member of the queue.
+     */
+    this.forEach = function(callback) {
+        var current = queueHead;
+        while (current) {
+            try {
+                callback(current.payload);
+            } catch (e) {//Try
+                //There's just nothing to be done here.
+            } //Catch Error
+            current = current.next;
+        }
+    }.bind(this);//forEach(callback)
 }

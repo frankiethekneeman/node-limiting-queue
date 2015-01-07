@@ -138,6 +138,11 @@ Start the queue.
 
 Stop the queue.  This does not cancel working workers - it just ceases the creation of new workers.
 
+### queue.forEach()
+
+Execute a function on each member currently in the queue without removing it from the queue.
+This function is sequential in nature.
+
 ## Contributing
 
 Please maintain the existing style - but do open a pull request if you have a bugfix or a cool feature.
