@@ -148,6 +148,40 @@ module.exports = function LimitingQueue(opts) {
     }.bind(this);//privatePush(newWork)
 
     /**
+     *  Adds an item into the queue after all the items with higher or equal
+     *  priority, but before any items with lower priority.
+     *  
+     *  @param newWork a queue item to be added to the queue
+     */
+    var privatePrioritize = function(newWork) {
+        //If there is a head.
+        if (queueHead) {
+            var curr = queueHead
+                , prev = null;
+            while(curr != null && curr.priority >= newWork.priority) {
+                prev = curr;
+                curr = curr.next;
+            }
+            if (prev != null) {
+                //Inserting after the first
+                prev.next = newWork;
+            } else {
+                //Inserting at the beginning
+                queueHead = newWork;
+            }
+            newWork.next = curr; //No matter where you're inserting, 
+            if (curr == null) {
+                //newWork is now the tail, since we're clearly inserting at the end.
+                queueTail = newWork;
+            }
+        } else { //If there's a head
+            //If there's no head, there's no tail.
+            queueTail = queueHead = newWork;
+        }//else, no head
+        queueSize++;
+    }.bind(this);//privatePush(newWork)
+
+    /**
      *  Generalized private function to abstract queue node generation
      *  and adding.
      *  
@@ -157,12 +191,14 @@ module.exports = function LimitingQueue(opts) {
      *  
      *  @return true if the payload is added, false otherwise.
      */
-    var addPayload = function(payload, addAction) {
+    var addPayload = function(payload, addAction, priority) {
+        priority = priority || 0;
         var newWork = {
             payload: payload
             , retries: 0
             , next: null
             , errors: []
+            , priority: priority
         };//newWork Object
 
         var toReturn = false;
@@ -195,6 +231,19 @@ module.exports = function LimitingQueue(opts) {
      */
     this.append = function(payload) {
         return addPayload(payload, privateAppend);
+    }.bind(this);//append(payload)
+
+    /**
+     *  Adds an item into the queue after all the items with higher or equal
+     *  priority, but before any items with lower priority.  Default priority is 0.
+     *  
+     *  @param payload The data to eventually be delivered back.
+     *  @param priority the numeric priority assigned to this payload.
+     *  
+     *  @return true if the payload is added, false otherwise.
+     */
+    this.prioritize = function(payload, priority) {
+        return addPayload(payload, privatePrioritize, priority);
     }.bind(this);//append(payload)
 
     /**

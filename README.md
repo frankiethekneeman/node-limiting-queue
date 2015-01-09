@@ -69,7 +69,7 @@ The number of times this payload has previously been pushed to this function.
 The deferred object to declare success or failure on the queue item.  Call `deferred.fulfill()` to
 declare success, and `deferred.reject(error)` to declare a failure.
 
-### failure
+#### failure
 
 The function to call when a queue entry flunks out of the queue entirely.  
 Defaults to an empty function.
@@ -121,6 +121,15 @@ Returns true if the job is added, false otherwise.
 
 Append to the back of the queue.
 Returns true if the job is added, false otherwise.
+
+### queue.prioritize(payload, priority)
+
+Adds an item into the queue after all the items with higher or equal
+priority, but before any items with lower priority.  Default priority is 0.
+Returns true if the job is added, false otherwise.
+
+It is NOT recommended to mix and match prioritize and push/append, as the first is
+a relative insertion method, and the latter are absolute.  This can lead to unexpected behaviour.
 
 ### queue.size()
 

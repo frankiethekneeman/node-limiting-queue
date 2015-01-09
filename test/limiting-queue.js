@@ -339,5 +339,95 @@ describe('Limiting Queue', function() {
                 }.bind(this)).to.not.throw();
             });
         });
+        describe('prioritize', function() {
+            it('Equal priorities should function as appends.', function() {
+                var first = sinon.spy()
+                    , second = sinon.spy()
+                    , third = sinon.spy()
+                    ;
+                this.queue.stop();
+                this.queue.prioritize(first,1);
+                this.queue.prioritize(second,1);
+                this.queue.prioritize(third,1);
+                this.queue.opts.callback = function(cb, attempts, deferred) {
+                    cb();
+                    deferred.fulfill();
+                };
+                this.queue.opts.progress = function(queueSize, workers) {
+                    if (queueSize == 0 && workers == 0) {
+                        expect(first).to.have.been.calledBefore(second);
+                        expect(second).to.have.been.calledBefore(third);
+                        done();
+                    }
+                };
+                this.queue.start();
+            });
+            it('After all equal, before all lesser', function() {
+                var first = sinon.spy()
+                    , second = sinon.spy()
+                    , third = sinon.spy()
+                    ;
+                this.queue.stop();
+                this.queue.prioritize(first,2);
+                this.queue.prioritize(second,1);
+                this.queue.prioritize(third,2);
+                this.queue.opts.callback = function(cb, attempts, deferred) {
+                    cb();
+                    deferred.fulfill();
+                };
+                this.queue.opts.progress = function(queueSize, workers) {
+                    if (queueSize == 0 && workers == 0) {
+                        expect(first).to.have.been.calledBefore(second);
+                        expect(second).to.have.been.calledAfter(third);
+                        done();
+                    }
+                };
+                this.queue.start();
+            });
+            it('Escalating Priorities should be pushed.', function() {
+                var first = sinon.spy()
+                    , second = sinon.spy()
+                    , third = sinon.spy()
+                    ;
+                this.queue.stop();
+                this.queue.prioritize(first,1);
+                this.queue.prioritize(second,2);
+                this.queue.prioritize(third,3);
+                this.queue.opts.callback = function(cb, attempts, deferred) {
+                    cb();
+                    deferred.fulfill();
+                };
+                this.queue.opts.progress = function(queueSize, workers) {
+                    if (queueSize == 0 && workers == 0) {
+                        expect(first).to.have.been.calledAfter(second);
+                        expect(second).to.have.been.calledAfter(third);
+                        done();
+                    }
+                };
+                this.queue.start();
+            });
+            it('Default to Zero.', function() {
+                var first = sinon.spy()
+                    , second = sinon.spy()
+                    , third = sinon.spy()
+                    ;
+                this.queue.stop();
+                this.queue.prioritize(first);
+                this.queue.prioritize(second,-1);
+                this.queue.prioritize(third,1);
+                this.queue.opts.callback = function(cb, attempts, deferred) {
+                    cb();
+                    deferred.fulfill();
+                };
+                this.queue.opts.progress = function(queueSize, workers) {
+                    if (queueSize == 0 && workers == 0) {
+                        expect(first).to.have.been.calledBefore(second);
+                        expect(first).to.have.been.calledAfter(third);
+                        done();
+                    }
+                };
+                this.queue.start();
+            });
+        });
     });
 });
