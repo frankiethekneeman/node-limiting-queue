@@ -22,7 +22,7 @@
     }
     , "devDependencies": {
         "mocha": "*"
-        , "chai": "*"
+        , "chai": "~1.9.2"
         , "sinon-chai": "*"
         , "sinon": "*"
         , "grunt-mocha-test": "~0.7.0"
