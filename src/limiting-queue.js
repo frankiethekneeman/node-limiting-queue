@@ -1,11 +1,9 @@
 var q = require('q')
-    , defaults = require('./defaults')
     , utils = require('./utils')
     ;
 
 module.exports = function LimitingQueue(opts) {
-    this.opts = utils.objectCopy(opts);
-    this.opts.__proto__ = defaults;
+    this.opts = new utils.Options(opts);
     var queueHead = null
         , queueTail = null
         , queueSize = 0
